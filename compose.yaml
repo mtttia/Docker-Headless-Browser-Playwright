@@ -1,0 +1,27 @@
+services:
+  edge-automation:
+    platform: linux/amd64
+
+    build: .
+    container_name: edge-automation
+
+    init: true
+    shm_size: "1gb"
+
+    ports:
+      - "127.0.0.1:6080:6080"
+
+    volumes:
+      - ./src:/app/src
+      - edge-profile:/home/node/edge-profile
+      - ./data:/app/data
+
+    environment:
+      NODE_ENV: production
+      TZ: Europe/Rome
+      DISPLAY: ":99"
+
+    restart: unless-stopped
+
+volumes:
+  edge-profile:
